@@ -1,7 +1,10 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.FlxG;
 import flixel.FlxSprite;
+
+using StringTools;
 
 class XPWindow extends FlxSprite
 {
@@ -16,12 +19,13 @@ class XPWindow extends FlxSprite
 		super(x, y);
 
 		this.closeHitboxOffset = closeHitboxOffset;
+		this.buttonHitboxOffset = buttonHitboxOffset;
 
-		loadGraphic("assets/images/xp" + image + ".png", true, width, height);
-		animation.add("normal", [0], 1, false); // box idle
-		animation.add("inactive", [1], 1, false); // box not pressed
-		animation.add("buttonp1", [3, 2, 3], 10, false); // pressed ok button
-		animation.play("normal");
+		this.loadGraphic("assets/images/xp" + image + ".png", true, width, height);
+		this.animation.add("normal", [0], 1, false); // box idle
+		this.animation.add("inactive", [1], 1, false); // box not pressed
+		this.animation.add("buttonp1", [3, 2, 3], 2, false); // pressed ok button
+		this.animation.play("normal");
 		this.alpha = windowAlpha;
 
 		titlebarHitBox = new FlxSprite(this.x, this.y).makeGraphic(Std.int(this.width), 29);
@@ -38,26 +42,30 @@ class XPWindow extends FlxSprite
 
 	override public function update(elapsed:Float)
 	{
-		if (FlxG.mouse.justPressed)
+		if (FlxG.mouse.justPressed && !this.animation.curAnim.name.contains("button"))
 		{
 			if (FlxG.mouse.overlaps(this))
-				animation.play("normal");
+				this.animation.play("normal");
 			else
-				animation.play("inactive");
+				this.animation.play("inactive");
 		}
 
 		if (FlxG.mouse.overlaps(okHitBox) && FlxG.mouse.justPressed)
 		{
-			animation.play("buttonp1");
+			this.animation.play("buttonp1");
 
-			animation.finishCallback = function(n)
+			onButtonPress();
+
+			FlxG.sound.play('assets/sounds/xp-error.mp3', 1, false, null, true, function() {
+				this.animation.play("normal");
+			});
+
+			/*this.animation.finishCallback = function(n)
 			{
 				FlxG.sound.play('assets/sounds/xp-error.mp3', 1);
 
-				onButtonPress();
-
-				animation.finishCallback = function(n) {};
-			};
+				this.animation.finishCallback = function(n) {};
+			}; //had to comment this out due to trashy ass bugs smh*/
 		}
 
 		if (FlxG.mouse.overlaps(closeButtonHitBox) && FlxG.mouse.justPressed)
