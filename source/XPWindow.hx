@@ -14,7 +14,8 @@ class XPWindow extends FlxSprite
 	public var closeHitboxOffset:Array<Float> = [0, 0];
 	public var buttonHitboxOffset:Array<Float> = [0, 0];
 
-	override public function new(x:Float = 5, y:Float = 0, image:String = "", width:Int = 248, height:Int = 129, buttonHitboxOffset:Array<Float>, closeHitboxOffset:Array<Float>, windowAlpha:Float = 1)
+	override public function new(x:Float = 5, y:Float = 0, image:String = "", width:Int = 248, height:Int = 129, buttonHitboxOffset:Array<Float>,
+			closeHitboxOffset:Array<Float>, windowAlpha:Float = 1)
 	{
 		super(x, y);
 
@@ -57,15 +58,16 @@ class XPWindow extends FlxSprite
 
 			onButtonPress();
 
-			FlxG.sound.play('assets/sounds/xp-error.mp3', 1, false, null, true, function() {
+			FlxG.sound.play('assets/sounds/xp-error.mp3', 1, false, null, true, function()
+			{
 				this.animation.play("normal");
 			});
 
 			/*this.animation.finishCallback = function(n)
-			{
-				FlxG.sound.play('assets/sounds/xp-error.mp3', 1);
+				{
+					FlxG.sound.play('assets/sounds/xp-error.mp3', 1);
 
-				this.animation.finishCallback = function(n) {};
+					this.animation.finishCallback = function(n) {};
 			}; //had to comment this out due to trashy ass bugs smh*/
 		}
 
@@ -90,7 +92,8 @@ class XPWindow extends FlxSprite
 		okHitBox.kill();
 	}
 
-	dynamic public function onButtonPress() {
+	dynamic public function onButtonPress()
+	{
 		trace("no code UwU");
 	}
 }
