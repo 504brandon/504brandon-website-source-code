@@ -24,7 +24,7 @@ class XPWindow extends FlxSprite
 		this.loadGraphic("assets/images/xp" + image + ".png", true, width, height);
 		this.animation.add("normal", [0], 1, false); // box idle
 		this.animation.add("inactive", [1], 1, false); // box not pressed
-		this.animation.add("buttonp1", [3, 2, 3], 2, false); // pressed ok button
+		this.animation.add("buttonp1", [2], 1, false); // pressed ok button
 		this.animation.play("normal");
 		this.alpha = windowAlpha;
 
@@ -37,6 +37,7 @@ class XPWindow extends FlxSprite
 		FlxG.state.add(closeButtonHitBox);
 
 		okHitBox = new FlxSprite(this.x + 89 + buttonHitboxOffset[0], this.y + 93 + buttonHitboxOffset[1]).makeGraphic(71, 20);
+		okHitBox.visible = false;
 		FlxG.state.add(okHitBox);
 	}
 
